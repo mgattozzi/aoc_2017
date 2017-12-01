@@ -3,10 +3,11 @@ const CAPTCHA: &str = "951484596541141557316984781494999179679767747627132447513
 use std::str;
 
 fn main() {
-    println!("{}", captcha(CAPTCHA.as_bytes()));
+    println!("{}", captcha_part1(CAPTCHA.as_bytes()));
+    println!("{}", captcha_part2(CAPTCHA.as_bytes()));
 }
 
-fn captcha(num: &[u8]) -> u64 {
+fn captcha_part1(num: &[u8]) -> u64 {
     let mut value =
          num.windows(2)
             .fold(0, |mut acc, val| {
@@ -19,6 +20,28 @@ fn captcha(num: &[u8]) -> u64 {
             });
     if num[0] == num[num.len() - 1] {
         value += unsafe { str::from_utf8_unchecked(&[num[0]]) }.parse::<u64>().unwrap();
+    }
+
+    value
+}
+
+fn captcha_part2(num: &[u8]) -> u64 {
+    let len = num.len();
+    let step = num.len() / 2;
+    let mut value = 0;
+    for i in 0 .. len {
+        if step + i >= len {
+
+            let idx = (step + i) - len;
+            if num[idx] == num[i] {
+                 value += unsafe { str::from_utf8_unchecked(&[num[idx]]) }.parse::<u64>().unwrap();
+            }
+
+        } else {
+            if num[step + i] == num[i] {
+                value += unsafe { str::from_utf8_unchecked(&[num[step + i]]) }.parse::<u64>().unwrap();
+            }
+        }
     }
 
     value
