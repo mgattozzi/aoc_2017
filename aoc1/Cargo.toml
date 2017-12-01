@@ -1,0 +1,6 @@
+[package]
+name = "aoc1"
+version = "0.1.0"
+authors = ["Michael Gattozzi <mgattozzi@gmail.com>"]
+
+[dependencies]
